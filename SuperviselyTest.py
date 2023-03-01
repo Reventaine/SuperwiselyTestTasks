@@ -13,7 +13,7 @@ def slice(img_path, window_size, offset):
         if '%' in window_size:
             window_size = tuple(int(float(window_size.strip('%')) / i * 100) for i in img.size)
 
-        # Check if еру window parameters are correct:
+        # Check if window parameters are correct:
         if window_size[0] * window_size[1] > width or window_size[0] * window_size[1] > height:
             print('Invalid parameters for the window size. Window with this size is larger than the image.')
 
@@ -23,8 +23,8 @@ def slice(img_path, window_size, offset):
             os.makedirs(save_dir)
 
         # Loop over the image and slice:
-        for y in range(0, height - window_size[1] + 1, offset[1]):
-            for x in range(0, width - window_size[0] + 1, offset[0]):
+        for x in range(0, width - window_size[0] + 1, offset[0]):
+            for y in range(0, height - window_size[1] + 1, offset[1]):
                 # Give proper filename for the sliced parts:
                 filename = os.path.join(save_dir,
                                         f"{img_path.split('/')[-1].split('.')[0]}"
