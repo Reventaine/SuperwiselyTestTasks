@@ -5,7 +5,9 @@ Solutions for Supervisely test tasks for the Python Developer role.
 
 ### Solution:
 I used the PIL library to solve this problem. The logic behind it is as follows: the split script checks the presence of a given file, if the window size is given in percentages, converts them into pixels, checks that the window size does not go beyond the image and, using the crop() method, iterates over the horizontal and vertical coordinates of the image and slices the image into many smaller ones. For each window position, the code generates a unique filename for the corresponding patch, based on the input image filename and the window coordinates.<br>
+
 ![Screenshot 2023-03-01 154701](https://user-images.githubusercontent.com/56644580/222130768-6941f943-ff9b-40ff-84b2-706bc5e13899.jpg)<br>
+
 The merge script creates a blank image of size and mode based on the original image. using the paste method the script assembles the original image from the pieces based on the data stored in the name of the pieces and then checks both images with ImageChops.difference(). The image is restored without pixel changes only if the slices and the image itself are saved in png format without compression, so the merged image size is more than that of the original.
 #### Time spent: ~3.5 hrs.
 <br>
@@ -29,4 +31,7 @@ This one was quite tricky because you need the knowledge of pointclouds.
 After researching I choose to use nuScenes dataset mini <href>https://www.nuscenes.org/download</href> and their devkit <href>https://github.com/nutonomy/nuscenes-devkit</href>.
 Using their example scripts <href>https://github.com/nutonomy/nuscenes-devkit/tree/master/python-sdk/nuscenes/scripts</href> I believe I`ve managed to create a solution for the task.<br>
 That being said, the logic of the solution is as follows: The script goes through all scenes in the dataset, filters the data by class "vehicles" and finds point clouds by LIDAR_TOP category. Then using the method LidarPointCloud.from_file() we get an array of points and write it to a new file. 
+
+![Screenshot 2023-03-01 165057](https://user-images.githubusercontent.com/56644580/222144381-244ddf74-cce4-4752-be9a-f3c70e3c71bf.jpg)<br>
+
 #### Time spent: ~2.5 hrs
