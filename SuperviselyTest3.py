@@ -2,7 +2,8 @@ import numpy as np
 import os
 import os.path as osp
 from nuscenes.nuscenes import NuScenes
-from nuscenes.utils.data_classes import LidarPointCloud
+from nuscenes.utils.data_classes import LidarPointCloud, Box
+from pyquaternion import Quaternion
 
 
 # Specify the NuScenes dataset location and version:
@@ -30,12 +31,22 @@ def get_cars_pcs():
             if annotation_data['category_name'] in classes:
                 # Load the point cloud:
                 points = nuscenes.get('sample_data', sample_data['data']['LIDAR_TOP'])
-                pc = LidarPointCloud.from_file(osp.join(nuscenes.dataroot, points['filename']))
+
+                # Extract car cuboid from the point cloud data:
+                car_size = annotation_data['size']
+                car_orientation = Quaternion(annotation_data['rotation'])
+                car_translation = np.array(annotation_data['translation'])
+                car_cuboid = Box(center=car_translation, size=car_size, orientation=car_orientation)
+                car_cuboid_points = car_cuboid.corners()
+                # Save the car cuboid as a PLY file:
+                name = points['filename'].split('/')[-1].split('.')[0] + '_' + annotation_data['token']
+                np.savetxt(f'{out_path}/{name}.ply', car_cuboid_points)
 
                 # Convert the point cloud to a numpy array and save:
-                points_array = pc.points
-                name = points['filename'].split('/')[-1].split('.')[0]
-                np.savetxt(f'{out_path}/{name}.ply', points_array)
+                # pc = LidarPointCloud.from_file(osp.join(nuscenes.dataroot, points['filename']))
+                # points_array = pc.points
+                # name = points['filename'].split('/')[-1].split('.')[0]
+                # np.savetxt(f'{out_path}/{name}.ply', points_array)
 
 
 if __name__ == "__main__":
