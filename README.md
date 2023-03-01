@@ -27,6 +27,6 @@ Then, using the OpenCV library, I assembled the resulting frames into a total vi
 ### Solution:
 This one was quite tricky because you need the knowledge of pointclouds.
 After researching I choose to use nuScenes dataset mini <href>https://www.nuscenes.org/download</href> and their devkit <href>https://github.com/nutonomy/nuscenes-devkit</href>.
-Using their example scripts <href>https://github.com/nutonomy/nuscenes-devkit/tree/master/python-sdk/nuscenes/scripts</href> I believe I`ve managed to create a solution for the task (although I think something is missing).<br>
+Using their example scripts <href>https://github.com/nutonomy/nuscenes-devkit/tree/master/python-sdk/nuscenes/scripts</href> I believe I`ve managed to create a solution for the task.<br>
 That being said, the logic of the solution is as follows: The script goes through all scenes in the dataset, filters the data by class "vehicles" and finds point clouds by LIDAR_TOP category. Then using the method LidarPointCloud.from_file() we get an array of points and write it to a new file. 
 #### Time spent: ~2.5 hrs
